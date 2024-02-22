@@ -18,6 +18,7 @@
             }
             if (property_exists($this->config_container,$context) == FALSE) {
                 $this->config_container->$context = new Config();
+                $this->config_container->$context->setNamespace();
             }
             return $this->config_container->$context;
         }

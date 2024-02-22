@@ -41,8 +41,9 @@
                 return FALSE;
             }
         }
-        public function setNamespace(string $namespace)
+        public function setNamespace(?string $namespace = "")
         {
+            if ($namespace == "") $namespace = $this->namespace;
             if (property_exists($this->data,$namespace) == FALSE) {
                 $this->data->{$namespace} = new stdClass();
             }

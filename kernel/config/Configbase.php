@@ -18,11 +18,11 @@
         public function __destruct(){}
         protected function __clone(){}
 
-        protected function existsNameSpace(string $namespace)
+        public function existsNameSpace(string $namespace):bool
         {
             return property_exists($this->data,$namespace);
         }
-        protected function existKey(string $namespace, string $key) : bool
+        public function existKey(string $namespace, string $key) : bool
         {
             if ($this->existsNameSpace($namespace) == TRUE) {
                 return property_exists($this->data->{$namespace},$key);
@@ -73,6 +73,45 @@
                 throw new RuntimeException("The key violate the key policy",300);
             }
             return;
+        }
+        public function nameSpaces():array
+        {
+            return array_keys((array) $this->data);
+        }
+        public function keys(string $namespace):array
+        {
+            if ($this->existsNameSpace($namespace) == TRUE) {
+                return array_keys((array) $this->data->{$namespace});
+            } else {
+                throw new RuntimeException("$namespace not found");
+            }
+        }
+        //The target will keep all defined namespace. Merge only affects common namespaces.
+        public static function merge(Iconfig $source, Iconfig $target, string $type = Iconfig::MERGE_ALL):Iconfig
+        {
+            $namespaces = $source->nameSpaces();
+            foreach($namespaces as $namespace) {
+                if ($target->existsNameSpace($namespace) == FALSE) continue;
+                $keys = $source->keys($namespace);
+                foreach($keys as $key) {
+                    switch($type) {
+                        case Iconfig::MERGE_ALL:
+                            $target->set($key, $source->get($key, $namespace), $namespace);
+                            break;
+                        case Iconfig::MERGE_ONLYNEW:
+                            if ($target->existKey($namespace, $key) == FALSE) {
+                                $target->set($key, $source->get($key, $namespace), $namespace);
+                            }
+                            break;
+                        case Iconfig::MERGE_ONLYOVERRIDE:
+                            if ($target->existKey($namespace, $key) == TRUE) {
+                                $target->set($key, $source->get($key, $namespace), $namespace);
+                            }
+                            break;
+                    }
+                }
+            }
+            return $target;
         }
     }
 ?>

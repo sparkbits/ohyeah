@@ -29,6 +29,13 @@ use stdClass;
             $fconfig = $this->FC_initialize("__FACTORY__");
             return [$config, $fconfig];
         }
+        public function setConfigValue(string $key, string $value):void
+        {
+            $fconfig = $this->FC_get("__FACTORY__");
+            $fconfig->set($key,$value);
+            $this->FC_set($fconfig,"__FACTORY__");
+            return;
+        }
         //When you customize the object from init settings.
         public function get():object
         {

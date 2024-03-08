@@ -79,7 +79,7 @@
             $data[$profile][Ipdowrapper::DB] = $db;
             $data[$profile][Ipdowrapper::USER] = $user;
             $data[$profile][Ipdowrapper::PWD] = $pwd;
-            file_put_contents(json_encode($data), $filename);
+            file_put_contents($filename, json_encode($data));
             return;
         }
     }

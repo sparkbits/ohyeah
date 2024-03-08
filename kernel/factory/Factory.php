@@ -14,7 +14,9 @@ use stdClass;
         {                                     
             //Configuration relative to object behavior
             [$object_config, $factory_config] = $this->init();
-            $object_config = Configbase::merge($config,$object_config, Iconfig::MERGE_ALL);
+            if (is_null($config) == FALSE) { 
+                $object_config = Configbase::merge($config,$object_config, Iconfig::MERGE_ALL);
+            }
             $this->FC_set($object_config, "__OBJECT__");
             $this->FC_set($factory_config, "__FACTORY__");
         }

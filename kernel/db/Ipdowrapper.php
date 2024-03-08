@@ -25,8 +25,10 @@
  
          //Factory settings
          const CONFIG_PATH = "pdo-db-conf";
+         const AUTOCONNECT = "pdo-db-autoconnect";
          //Profile
          const PROFILE = "profile-name";
+         
  
          //FORMATS
          const DB_DATE_FORMAT = "pdo-db-date-format";

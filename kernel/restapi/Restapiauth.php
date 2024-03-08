@@ -1,8 +1,6 @@
 <?php
     namespace ohyeah\restapi;
 
-    use Irestapiauth;
-
     use ohyeah\config\Iconfig;
     use ohyeah\config\Featconfig;
     use ohyeah\db\Featpdo;
@@ -30,10 +28,10 @@
             $pdo = $this->FPDO_get();
             $params = new Pdoparams();
             //Checking index
-            if (array_key_exists($config->get("apiKey-indexName"), $data) == FALSE) {
+            if (array_key_exists($config->get(Irestapiauth::APIKEY_NAME), $data) == FALSE) {
                 throw new RuntimeException("Invalid key.");
             } else {
-                $params->set($config->get("apiKey-indexName"),$data[$config->get("apiKey-indexName")]);
+                $params->set($config->get(Irestapiauth::APIKEY_NAME),$data[$config->get(Irestapiauth::APIKEY_NAME)]);
             }
             $strquery = "select `apikey` from `apikeys` where `apikey`=?";
             $row = $pdo->query($strquery, $params);

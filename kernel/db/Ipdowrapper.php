@@ -25,7 +25,7 @@
  
          //Factory settings
          const CONFIG_PATH = "pdo-db-conf";
-         const AUTOCONNECT = FALSE;
+         const AUTOCONNECT = "pdo-db-autoconnect";
          //Profile
          const PROFILE = "profile-name";
          
